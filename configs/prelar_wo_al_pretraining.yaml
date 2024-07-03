@@ -1,0 +1,178 @@
+defaults:
+
+  # Train Script
+  logdir: ./dev/log
+  load_logdir: ./dev/null
+  load_model_dir: ./dev/null
+  video_dir: ./dev/null
+  video_dirs: {something: ./dev/null, rlbench: ./dev/null}
+  seed: 0
+  device: cuda
+  wandb: {project: 'world-model',name: 'prelar_wo_al_pretraining',mode: 'online'}
+  task: metaworld_drawer_open
+  render_size: [64, 64]
+  dmc_camera: -1
+  camera: none
+  atari_grayscale: True
+  time_limit: 0
+  action_repeat: 1
+  steps: 1e8
+  log_every: 1e4
+  video_every: 2000
+  eval_every: 5000
+  pretrain: 1
+  train_every: 5
+  train_steps: 1
+  replay: {capacity: 2e6, ongoing: False, minlen: 50, maxlen: 50, prioritize_ends: True}
+  dataset: {batch: 16, length: 50}
+  log_keys_video: ['image']
+  log_keys_sum: '^$'
+  log_keys_mean: '^$'
+  log_keys_max: '^$'
+  precision: 16
+  jit: True
+
+  eval_video_list: none
+  save_all_models: False
+
+  # Agent
+  clip_rewards: tanh
+
+  # World Model
+  grad_heads: [decoder]
+  rssm: {action_free: False, ensemble: 1,embed_dim: 3072, hidden: 1024, deter: 1024, stoch: 32, discrete: 32, act: elu, norm: none, std_act: sigmoid2, min_std: 0.1}
+  encoder_type: resnet # ['plaincnn', 'resnet', 'deco_resnet']
+  encoder: {
+    mlp_keys: '.*', 
+    cnn_keys: '.*', 
+    act: elu, 
+    norm: none, 
+    cnn_depth: 48, 
+    cnn_kernels: [4, 4, 4, 4], 
+    mlp_layers: [400, 400, 400, 400], 
+    res_norm: 'batch',
+    res_depth: 3,
+    res_layers: 2,
+  }
+  decoder_type: resnet # ['plaincnn', 'resnet', 'deco_resnet']
+  decoder: {
+    mlp_keys: '.*', 
+    cnn_keys: '.*', 
+    act: elu, 
+    norm: none, 
+    cnn_depth: 48, 
+    cnn_kernels: [5, 5, 6, 6], 
+    mlp_layers: [400, 400, 400, 400], 
+    res_norm: 'batch',
+    res_depth: 3,
+    res_layers: 2,
+  }
+  loss_scales: {
+    kl: 1.0, 
+    image: 1.0
+  }
+  kl: {free: 0.0, forward: False, balance: 0.8, free_avg: True}
+  model_opt: {opt: adam, lr: 1e-4, eps: 1e-5, clip: 100, wd: 1e-6}
+  
+  dataset_type: replay
+  video_list: none
+  video_lists: {something: none, human: none, ytb: none, rlbench: none, rlbenchrandom: none, triped_walk: none}
+  manual_labels: False
+
+  # Contextualized World Model (subset of Decoupled World Model)
+  # Decoupled World Model 
+  encoder_deco: { 
+    deco_res_layers: 2,
+    deco_cnn_depth: 48,
+    deco_cond_choice: trand,
+    ctx_aug: none, 
+  }
+  decoder_deco: {
+    deco_attmask: 0.75,
+    ctx_attmaskwarmup: -1,
+  }
+
+  vanet: {
+    mlp_keys: '$^', 
+    cnn_keys: 'image', 
+    act: elu, 
+    norm: none, 
+    cnn_depth: 48, 
+    cnn_kernels: [4, 4, 4, 4], 
+    mlp_layers: [400, 400, 400, 400], 
+    res_norm: 'batch',
+    res_depth: 3,
+    res_layers: 2,
+    hidden_dim: 1024,
+    deter: 1024,
+    stoch: 32,
+    discrete: 32,
+    std_act: sigmoid2,
+    va_method: concate,
+    type_: stoch,
+  }
+
+
+something_pretrain:
+
+  task: metaworld_door_open
+  video_dirs: {something: ~/nav/dataset/Something-Something/20bn-something-something-v2-frames-64}
+  encoder: {mlp_keys: '$^', cnn_keys: 'image'}
+  decoder: {mlp_keys: '$^', cnn_keys: 'image'}
+  replay: {minlen: 25, maxlen: 25}
+  dataset: {batch: 16, length: 25}
+  action_repeat: 1
+  steps: 5e7
+  log_every: 100
+  train_every: 1
+  rssm: {hidden: 1024, deter: 1024}
+  grad_heads: [decoder]
+  model_opt.lr: 3e-4
+
+  dataset_type: something
+  video_lists: {something: train_video_folder}
+  manual_labels: False
+
+
+debug:
+  jit: False
+  time_limit: 100
+  eval_every: 300
+  log_every: 300
+  pretrain: 1
+  train_steps: 1
+  replay: {minlen: 10, maxlen: 30}
+  dataset: {batch: 10, length: 10}
+
+
+small:
+  rssm: {hidden: 200, deter: 200}
+
+
+plainresnet:
+  encoder_type: resnet
+  decoder_type: resnet
+
+
+contextualized:
+  encoder_type: deco_resnet
+  decoder_type: deco_resnet
+
+rlbench_pretrain:
+  task: metaworld_door_open
+  video_dirs: {rlbench: ~/nav/dataset/rlbench/train_episodes}
+  encoder: {mlp_keys: '$^', cnn_keys: 'image'}
+  decoder: {mlp_keys: '$^', cnn_keys: 'image'}
+  replay: {minlen: 25, maxlen: 25}
+  dataset: {batch: 16, length: 25}
+  action_repeat: 1
+  steps: 5e7
+  log_every: 100
+  train_every: 1
+  rssm: {hidden: 1024, deter: 1024}
+  grad_heads: [decoder]
+  model_opt.lr: 3e-4
+
+  dataset_type: rlbench
+  video_lists: {rlbench: null}
+  manual_labels: False
