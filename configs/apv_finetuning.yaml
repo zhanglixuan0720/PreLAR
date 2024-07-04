@@ -164,7 +164,7 @@ defaults:
 
 metaworld:
 
-  task: metaworld_door_open
+  task: metaworld_drawer_open
   encoder: {mlp_keys: '$^', cnn_keys: 'image'}
   decoder: {mlp_keys: '$^', cnn_keys: 'image'}
   dataset: {batch: 50, length: 50}

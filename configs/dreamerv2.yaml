@@ -141,7 +141,7 @@ defaults:
 
 metaworld:
 
-  task: metaworld_door_open
+  task: metaworld_drawer_open
   encoder: {mlp_keys: '$^', cnn_keys: 'image'}
   decoder: {mlp_keys: '$^', cnn_keys: 'image'}
   dataset: {batch: 50, length: 50}
@@ -187,104 +187,6 @@ robodesk:
   critic_opt.lr: 8e-5
   model_opt.lr: 3e-4
 
-atari:
-
-  task: atari_pong
-  encoder: {mlp_keys: '$^', cnn_keys: 'image'}
-  decoder: {mlp_keys: '$^', cnn_keys: 'image'}
-  time_limit: 27000
-  action_repeat: 4
-  steps: 5e7
-  eval_every: 2.5e5
-  log_every: 1e4
-  prefill: 50000
-  train_every: 16
-  clip_rewards: tanh
-  rssm: {hidden: 600, deter: 600}
-  model_opt.lr: 2e-4
-  actor_opt.lr: 4e-5
-  critic_opt.lr: 1e-4
-  actor_ent: 1e-3
-  discount: 0.999
-  loss_scales.kl: 0.1
-  loss_scales.discount: 5.0
-
-crafter:
-
-  task: crafter_reward
-  encoder: {mlp_keys: '$^', cnn_keys: 'image'}
-  decoder: {mlp_keys: '$^', cnn_keys: 'image'}
-  log_keys_max: '^log_achievement_.*'
-  log_keys_sum: '^log_reward$'
-  rssm: {hidden: 1024, deter: 1024}
-  discount: 0.999
-  model_opt.lr: 1e-4
-  actor_opt.lr: 1e-4
-  critic_opt.lr: 1e-4
-  actor_ent: 3e-3
-  .*\.norm: layer
-
-dmc_vision:
-
-  task: dmc_walker_walk
-  encoder: {mlp_keys: '$^', cnn_keys: 'image'}
-  decoder: {mlp_keys: '$^', cnn_keys: 'image'} #, cnn_input_dim: 1224}
-  action_repeat: 2
-  eval_every: 1e4
-  prefill: 1000
-  pretrain: 100
-  clip_rewards: identity
-  pred_discount: False
-  replay.prioritize_ends: False
-  grad_heads: [decoder, reward]
-  # rssm: {hidden: 200, deter: 200}
-  model_opt.lr: 3e-4
-  actor_opt.lr: 8e-5
-  critic_opt.lr: 8e-5
-  actor_ent: 1e-4
-  kl.free: 1.0
-
-dmc_proprio:
-
-  task: dmc_walker_walk
-  encoder: {mlp_keys: '.*', cnn_keys: '$^'}
-  decoder: {mlp_keys: '.*', cnn_keys: '$^'}
-  action_repeat: 2
-  eval_every: 1e4
-  prefill: 1000
-  pretrain: 100
-  clip_rewards: identity
-  pred_discount: False
-  replay.prioritize_ends: False
-  grad_heads: [decoder, reward]
-  rssm: {hidden: 200, deter: 200}
-  model_opt.lr: 3e-4
-  actor_opt.lr: 8e-5
-  critic_opt.lr: 8e-5
-  actor_ent: 1e-4
-  kl.free: 1.0
-
-dmc_remastered:
-
-  task: dmcr_walker_walk
-  encoder: {mlp_keys: '$^', cnn_keys: 'image'}
-  decoder: {mlp_keys: '$^', cnn_keys: 'image'}
-  action_repeat: 2
-  eval_every: 1e4
-  prefill: 1000
-  pretrain: 100
-  clip_rewards: identity
-  pred_discount: False
-  replay.prioritize_ends: False
-  grad_heads: [decoder, reward]
-  model_opt.lr: 3e-4
-  actor_opt.lr: 8e-5
-  critic_opt.lr: 8e-5
-  actor_ent: 1e-4
-  kl.free: 1.0
-  dmcr_vary: all
-  eval_eps: 10
-
 debug:
 
   jit: False
@@ -297,31 +199,6 @@ debug:
   replay: {minlen: 10, maxlen: 30}
   dataset: {batch: 10, length: 10}
 
-
-dmcr_hopper:
-  dmcr_vary: [bg, floor, body, target, reflectance, light]
-
-
-carla:
-
-  task: carla_Changing
-  encoder: { mlp_keys: '$^', cnn_keys: 'image' }
-  decoder: { mlp_keys: '$^', cnn_keys: 'image' }
-  action_repeat: 1
-  steps: 152002
-  eval_every: 5e3
-  prefill: 1000
-  pretrain: 100
-  clip_rewards: identity
-  pred_discount: False
-  replay.prioritize_ends: False
-  grad_heads: [ decoder, reward ]
-  model_opt.lr: 3e-4
-  actor_opt.lr: 8e-5
-  critic_opt.lr: 8e-5
-  actor_ent: 1e-4
-  kl.free: 1.0
-  eval_eps: 5
 
 
 plaincnn:

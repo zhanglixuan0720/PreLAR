@@ -181,5 +181,7 @@ logs/
 
 # larger files
 pre-train_models/
-
-
+*.pt
+*.pth
+*.h5
+*.npz

@@ -115,8 +115,8 @@ defaults:
 
 something_pretrain:
 
-  task: metaworld_door_open
-  video_dirs: {something: ~/nav/dataset/Something-Something/20bn-something-something-v2-frames-64}
+  task: metaworld_drawer_open
+  video_dirs: {something: dataset/Something-Something/20bn-something-something-v2-frames-64}
   encoder: {mlp_keys: '$^', cnn_keys: 'image'}
   decoder: {mlp_keys: '$^', cnn_keys: 'image'}
   replay: {minlen: 25, maxlen: 25}
@@ -159,8 +159,8 @@ contextualized:
   decoder_type: deco_resnet
 
 rlbench_pretrain:
-  task: metaworld_door_open
-  video_dirs: {rlbench: ~/nav/dataset/rlbench/train_episodes}
+  task: metaworld_drawer_open
+  video_dirs: {rlbench: dataset/rlbench/train_episodes}
   encoder: {mlp_keys: '$^', cnn_keys: 'image'}
   decoder: {mlp_keys: '$^', cnn_keys: 'image'}
   replay: {minlen: 25, maxlen: 25}

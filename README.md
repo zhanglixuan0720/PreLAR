@@ -10,7 +10,7 @@ The citation method is taking the scenic route but will be arriving shortly
 
 ## Method
 
-**TL;DR**: We introduce PreLAR, an action-conditional world model pre-training scheme based on action-free videos to sample-efficient model-based RL of visual control tasks.
+We introduce PreLAR, an action-conditional world model pre-training scheme based on action-free videos to sample-efficient model-based RL of visual control tasks.
 
 <div align="center"><img align="center" src="assets/framework.png" width="100%"></div>
 
@@ -75,7 +75,7 @@ rlbench_pretrain:
 
 something_pretrain:
  task: metaworld_door_open
- video_dirs: {something: ../dataset/Something-Something/20bn-something-something-v2-frames-64}
+ video_dirs: {something: ./dataset/Something-Something/20bn-something-something-v2-frames-64}
 
 ```
 Run the following command to pre-train world models.

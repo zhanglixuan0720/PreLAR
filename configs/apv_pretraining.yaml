@@ -76,7 +76,7 @@ defaults:
   
   dataset_type: replay
   video_list: none
-  video_lists: {something: none, human: none, ytb: none, rlbench: none, metaworld_ml10: none, rlbenchrandom: none, rlbenchdemo: none, triped_walk: none}
+  video_lists: {something: none, rlbench: none}
   manual_labels: False
   # num_workers: 8
 
@@ -96,8 +96,8 @@ defaults:
 
 something_pretrain:
 
-  task: metaworld_door_open
-  video_dirs: {something: ~/nav/dataset/Something-Something/20bn-something-something-v2-frames-64}
+  task: metaworld_drawer_open
+  video_dirs: {something: dataset/Something-Something/20bn-something-something-v2-frames-64}
   encoder: {mlp_keys: '$^', cnn_keys: 'image'}
   decoder: {mlp_keys: '$^', cnn_keys: 'image'}
   replay: {minlen: 25, maxlen: 25}
@@ -143,8 +143,8 @@ contextualized:
 
 
 rlbench_pretrain:
-  task: metaworld_door_open
-  video_dirs: {rlbench: ~/nav/dataset/rlbench/train_episodes}
+  task: metaworld_drawer_open
+  video_dirs: {rlbench: dataset/rlbench/train_episodes}
   encoder: {mlp_keys: '$^', cnn_keys: 'image'}
   decoder: {mlp_keys: '$^', cnn_keys: 'image'}
   replay: {minlen: 25, maxlen: 25}
