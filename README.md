@@ -5,7 +5,14 @@ Official implementation of the PreLAR: World Model Pre-training with Learnable A
 If you find our codebase useful for your research, please cite our paper as:
 
 ```
-The citation method is taking the scenic route but will be arriving shortly
+@inproceedings{zhang2024prelar,
+  title={PreLAR: World Model Pre-training with Learnable Action Representation},
+  author={Zhang, Lixuan and Kan, Meina and Shan, Shiguang and Chen, Xilin},
+  booktitle={European Conference on Computer Vision},
+  pages={185--201},
+  year={2024},
+  organization={Springer}
+}
 ```
 
 ## Method
